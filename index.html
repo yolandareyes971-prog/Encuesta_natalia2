@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Encuesta del grupo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#f5f0ff,#edf6ff);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;color:#202020}
+.card{width:min(520px,100%);background:#fff;border-radius:24px;padding:28px;box-shadow:0 12px 35px #0002}
+.badge{display:inline-block;padding:7px 12px;border-radius:20px;background:#f0ecff;color:#6546d8;font-size:13px;font-weight:bold}
+h1{text-align:center;margin:14px 0 6px}
+.sub{text-align:center;color:#666;margin:0 0 24px}
+label{display:block;font-weight:bold;margin:16px 0 8px}
+input[type=text],input[type=password]{width:100%;padding:13px;border:1px solid #ccc;border-radius:12px;font-size:16px}
+.q{border-top:1px solid #eee;padding:17px 0}
+.q p{font-weight:bold;margin:0 0 10px}
+.option{font-weight:normal;margin:9px 0;display:flex;gap:8px;align-items:center}
+.option input{width:auto}
+button{width:100%;padding:14px;margin-top:20px;border:0;border-radius:12px;background:#6c4cff;color:white;font-size:17px;font-weight:bold;cursor:pointer}
+.small{text-align:center;color:#777;font-size:12px;line-height:1.4;margin-top:14px}
+#survey,#done{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+
+<div id="login">
+  <span class="badge">Encuesta del grupo</span>
+  <h1>Gustos del grupo</h1>
+  <p class="sub">Dirigida por Natalia</p>
+
+  <label for="user">Usuario de Instagram</label>
+  <input id="user" type="text" placeholder="@tu_usuario">
+
+  <label for="code">Contraseña</label>
+  <input id="code" type="password" placeholder="Escribe tu contraseña">
+
+  <button onclick="start()">Entrar a la encuesta</button>
+  <p class="small">La contraseña es únicamente para esta encuesta. No introduzcas contraseñas reales de Instagram.</p>
+</div>
+
+<div id="survey">
+  <h1>¡Vamos con la encuesta!</h1>
+  <p class="sub">Responde según tus gustos.</p>
+  <form onsubmit="finish(event)">
+    <div class="q"><p>1. ¿Cuál es tu color favorito?</p>
+      <label class="option"><input type="radio" name="q1" value="Azul" required> Azul</label>
+      <label class="option"><input type="radio" name="q1" value="Negro"> Negro</label>
+      <label class="option"><input type="radio" name="q1" value="Rosa"> Rosa</label>
+      <label class="option"><input type="radio" name="q1" value="Otro"> Otro</label>
+    </div>
+    <div class="q"><p>2. ¿Qué música prefieres?</p>
+      <label class="option"><input type="radio" name="q2" value="Pop" required> Pop</label>
+      <label class="option"><input type="radio" name="q2" value="Reguetón"> Reguetón</label>
+      <label class="option"><input type="radio" name="q2" value="Rock"> Rock</label>
+      <label class="option"><input type="radio" name="q2" value="Otra"> Otra</label>
+    </div>
+    <div class="q"><p>3. ¿Qué prefieres hacer en tu tiempo libre?</p>
+      <label class="option"><input type="radio" name="q3" value="Películas" required> Ver películas o series</label>
+      <label class="option"><input type="radio" name="q3" value="Música"> Escuchar música</label>
+      <label class="option"><input type="radio" name="q3" value="Amigos"> Salir con amigos</label>
+      <label class="option"><input type="radio" name="q3" value="Videojuegos"> Jugar videojuegos</label>
+    </div>
+    <div class="q"><p>4. ¿Qué plan te gusta más?</p>
+      <label class="option"><input type="radio" name="q4" value="Playa" required> Playa</label>
+      <label class="option"><input type="radio" name="q4" value="Montaña"> Montaña</label>
+      <label class="option"><input type="radio" name="q4" value="Ciudad"> Ciudad</label>
+    </div>
+    <div class="q"><p>5. ¿Cuál comida prefieres?</p>
+      <label class="option"><input type="radio" name="q5" value="Pizza" required> Pizza</label>
+      <label class="option"><input type="radio" name="q5" value="Tacos"> Tacos</label>
+      <label class="option"><input type="radio" name="q5" value="Hamburguesa"> Hamburguesa</label>
+      <label class="option"><input type="radio" name="q5" value="Otra"> Otra</label>
+    </div>
+    <button type="submit">Enviar encuesta</button>
+  </form>
+</div>
+
+<div id="done">
+  <h1>¡Gracias por participar! 🎉</h1>
+  <p class="sub">Natalia recibió tus respuestas.</p>
+</div>
+
+</div>
+<script>
+function start(){
+ const u=document.getElementById('user').value.trim();
+ const c=document.getElementById('code').value;
+ if(!u||!c){alert('Completa tu usuario y el código de acceso.');return;}
+ document.getElementById('login').style.display='none';
+ document.getElementById('survey').style.display='block';
+}
+function finish(e){
+ e.preventDefault();
+ const data={
+   usuario:document.getElementById('user').value,
+   respuestas:Object.fromEntries([...new FormData(e.target).entries()])
+ };
+ console.log('Respuestas de la encuesta:',data);
+ document.getElementById('survey').style.display='none';
+ document.getElementById('done').style.display='block';
+}
+</script>
+</body>
+</html>
